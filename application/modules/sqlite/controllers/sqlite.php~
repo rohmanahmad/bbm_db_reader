@@ -111,7 +111,7 @@ class Sqlite extends CI_Controller {
 	#-------------------------- END OF EXPORTS ------------------------------#
 	
 	function views($type='participants'){
-	 $this->load_model();
+	 $this->load->model();
 	 $this->load_header();
 	  if ($type == "users"){
 	  	$table="bbm_users";
