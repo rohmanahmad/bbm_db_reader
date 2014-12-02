@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Sqlite extends CI_Controller {
+class Bbm extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -19,7 +19,7 @@ class Sqlite extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('main');
+		$this->load->view('main/header');
 		
 	}
 	
