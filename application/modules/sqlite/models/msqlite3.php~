@@ -1,17 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+
+class Msqlite3 extends CI_Model{
+
  define('PRE','bbm_');
  
  define('T_USER',PRE.'users');
  define('T_PART',PRE.'participants');
  define('T_MSG',PRE.'messages');
-
-<<<<<<< HEAD:application/modules/bbm/models/bbm_model.php
-class Bbm_model extends CI_Model{
-=======
-class Msqlite3 extends CI_Model{
-
  
->>>>>>> dde10568aa22d9b68049d19be6184ba3b993caf3:application/modules/sqlite/models/msqlite3.php
  function __construct(){
 	parent::__construct();
  }

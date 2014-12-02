@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Bbm extends CI_Controller {
+class Sqlite extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -25,7 +25,7 @@ class Bbm extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('main/header');
+		$this->load->view('main');
 		
 	}
 	
@@ -111,7 +111,7 @@ class Bbm extends CI_Controller {
 	#-------------------------- END OF EXPORTS ------------------------------#
 	
 	function views($type='participants'){
-	 $this->load_model();
+	 $this->load->model();
 	 $this->load_header();
 	  if ($type == "users"){
 	  	$table="bbm_users";
