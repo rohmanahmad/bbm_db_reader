@@ -5,13 +5,7 @@
  define('T_PART',PRE.'participants');
  define('T_MSG',PRE.'messages');
 
-<<<<<<< HEAD:application/modules/bbm/models/bbm_model.php
 class Bbm_model extends CI_Model{
-=======
-class Msqlite3 extends CI_Model{
-
- 
->>>>>>> dde10568aa22d9b68049d19be6184ba3b993caf3:application/modules/sqlite/models/msqlite3.php
  function __construct(){
 	parent::__construct();
  }
@@ -66,8 +60,38 @@ class Msqlite3 extends CI_Model{
  #---------------------END OF EXPORTS ------------------------#
  
  function select_all($table,$param=''){
+	if($table=="messages"){
+		$sql="SELECT * FROM `bbm_messages` 
+				LEFT JOIN `bbm_participants` 
+					ON `bbm_participants`.`participant_id`=`bbm_messages`.`participant_id` 
+				LEFT JOIN `bbm_users` 
+					ON `bbm_users`.`userid`=`bbm_participants`.`user_id`";
+		$q=$this->db->query($sql);
+		return $q;
+	}
  	$this->db->where($param);
- 	return $this->db->get($table);
+ 	return $this->db->get(PRE.$table);
+ }
+ 
+ function select_coloum_name($table){
+	$sql="SHOW COLUMNS FROM ".PRE.$table." ";
+ 	return $this->db->query($sql);
+ }
+ 
+ function upload_filename($filename=''){
+	if(!empty($filename)){
+	 $data=array('filename'=>$filename,'time'=>date('Y-m-d g:i:s'),'status'=>1);
+	 $this->db->insert('uploaded_files',$data);
+	}
+ }
+ 
+ function select_file_for_export($userdata=''){
+	$sql="SELECT * FROM `uploaded_files` ORDER BY ID DESC LIMIT 1";
+	$q=$this->db->query($sql);
+	foreach($q->result() as $r){
+	 return $r->filename;
+	 exit();
+	}
  }
  
 

@@ -1,13 +1,4 @@
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
-
-<script>
-        tinymce.init({selector:'textarea'});
-</script>
-=======
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.css'); ?>">
-
->>>>>>> dde10568aa22d9b68049d19be6184ba3b993caf3
 <div style="background:#CADBFF;background1:pink;text-align:center;font-size;30px;font-weight:bold;width1:100%;vertical-align:center;padding:20px;border-bottom:1px dotted  #000000;">
 <table width="100%">
 	<tbody><tr>
@@ -26,18 +17,12 @@
 <table border="1" cellspacing="1px" height="30px" align="center" width="100%">
 	<tr>
 	<?php
-<<<<<<< HEAD
-          echo "<td bgcolor='green'>".anchor('email/email_control/compose','tulis pesan')."</td> ";
-          echo "<td bgcolor='green'>".anchor('email/email_control/view_mail','view pesan masuk')."</td>";
-          echo "<td bgcolor='green'>".anchor('email/email_control/view_unread','Unread')."</td>";
-=======
-          echo "<td bgcolor='green'>".anchor('sqlite/export_messages','ex_messages')."</td> ";
-          echo "<td bgcolor='green'>".anchor('sqlite/export_users','ex_users')."</td>";
-          echo "<td bgcolor='green'>".anchor('sqlite/export_participants','ex_participants')."</td>";
-          echo "<td bgcolor='green'>".anchor('sqlite/view_messages','messages')."</td>";
-          echo "<td bgcolor='green'>".anchor('sqlite/view_participants','participants')."</td>";
-          echo "<td bgcolor='green'>".anchor('sqlite/view_users','users')."</td>";
->>>>>>> dde10568aa22d9b68049d19be6184ba3b993caf3
+          echo "<td>".anchor('bbm/export_messages','ex_messages')."</td> ";
+          echo "<td>".anchor('bbm/export_users','ex_users')."</td>";
+          echo "<td>".anchor('bbm/export_participants','ex_participants')."</td>";
+          echo "<td>".anchor('bbm/views/messages','messages')."</td>";
+          echo "<td>".anchor('bbm/views/participants','participants')."</td>";
+          echo "<td>".anchor('bbm/views/users','users')."</td>";
         ?>
 		<td width=70%></td> 
 	</tr>

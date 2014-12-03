@@ -11,22 +11,53 @@ class Bbm extends CI_Controller {
 		$this->load->view('main/header');
 	}
 	
+	#--------------------- UPLOAD --------------------------------#
+	function upload_file(){
+		$config['upload_path'] = BASE_PATH.'/assets/db/';
+		$config['file_name']  = 'bbm_'.date('dymgis');
+		$config['allowed_types'] = '*';
+
+		$this->load->library('upload', $config);
+		if($this->upload->do_upload('uploaded_file')){
+			print_r($this->upload->data());
+			$this->load_model();
+			$this->m->upload_filename($config['file_name']);
+		}else{
+			print_r($this->upload->display_errors());
+		}
+		
+	}
+	
+	function test_upload(){
+		$this->load->helper('form');
+		echo form_open_multipart('bbm/upload_file');
+
+		echo '<input type="file" name="uploaded_file" size="20" />';
+
+		echo '<input type="submit" value="upload" />';
+
+		echo '</form>';
+	}
+	#--------------------- END OF UPLOAD --------------------------------#
+	
+	
 	#--------------------- EXPORTS --------------------------------#
 	
-	function load_model($modelname='msqlite3'){
+	function load_model($modelname='bbm_model'){
 		$this->load->model($modelname,'m');
 	}
 	
 	private function load_sqlite3(){
 		//BASEPATH didapat dari file index.php (lihat baris teratas)
-		$param=array('sqlitedbname'=>BASE_PATH.'/assets/db/bbm.db');
+		$this->load_model();
+		$filename=$this->m->select_file_for_export().'.db';
+		$param=array('sqlitedbname'=>BASE_PATH.'/assets/db/'.$filename);
 		$this->load->library('sqlite_lib',$param);
 	}
 
 	public function index()
 	{
 		$this->load->view('main/header');
-		
 	}
 	
 	function export_messages(){
@@ -36,7 +67,7 @@ class Bbm extends CI_Controller {
 		foreach($data as $r){
 			$messageid=$r->message_id;
 			$conversationid=$r->conversation_id;
-			$participantid=$r->partisipant_id;
+			$participantid=$r->participant_id;
 			$message=$r->text_messages;
 			$status=$r->status;
 			$st=$this->check_duplicate('messages',$messageid);// status '0' jika sudah ada data sebelumnya
@@ -44,14 +75,14 @@ class Bbm extends CI_Controller {
 				$param=array(
 					'message_id'=>$messageid,
 					'conversation_id'=>$conversationid,
-					'partisipant_id'=>$participantid,
+					'participant_id'=>$participantid,
 					'text_messages'=>$message,
 					'status'=>$status
 				);
 				$this->m->insert_new_message($param);
 			}
 		}
-		redirect();
+		#redirect();
 	}
 
 	function export_users()
@@ -70,7 +101,7 @@ class Bbm extends CI_Controller {
 				$this->m->insert_new_user($param);
 			}
 		}
-		redirect();
+		#redirect();
 	}
 
 	function export_participants()
@@ -93,7 +124,7 @@ class Bbm extends CI_Controller {
 				$this->m->insert_new_participant($param);
 			}
 		}
-		redirect();
+		#redirect();
 	}
 	
 	function check_duplicate($type,$param){
@@ -110,17 +141,20 @@ class Bbm extends CI_Controller {
 	
 	#-------------------------- END OF EXPORTS ------------------------------#
 	
-	function views($type='participants'){
+	function views($type='messages'){
 	 $this->load_model();
 	 $this->load_header();
 	  if ($type == "users"){
-	  	$table="bbm_users";
-	  }elseif($type == "messages"){
-	  	$table="bbm_messages";
+	  	$table="users";
+	  }elseif($type == "participants"){
+	  	$table="participants";
 	  }else{
-	  	$table="bbm_participants";
+	  	$table="messages";
 	  }
-	  	$q=$this->m->select_all($table,array());
+		$data['type']=$table;
+	  	$data['q']=$this->m->select_all($table,array());
+	  	$data['col']=$this->m->select_coloum_name($table);
+		$this->load->view('views',$data);
 	}
 	
 	

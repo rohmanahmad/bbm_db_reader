@@ -77,7 +77,7 @@ class Sqlite_lib {
 				$data['data'.$i]=array(
 					'message_id'=>$messageid,
 					'conversation_id'=>$conversationid,
-					'partisipant_id'=>$participantid,
+					'participant_id'=>$participantid,
 					'text_messages'=>$message,
 					'status'=>$status,
 				);
